@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: product_db_svc 
+  name: product-db-svc 
 spec:
   clusterIP: None  # Ini headless service
   selector:
-    app: product_db_svc
+    app: product-db-svc
   ports:
     - port: 5432
       targetPort: 5432
@@ -13,20 +13,20 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: product_db_svc
+  name: product-db-svc
 spec:
-  serviceName: product_db_svc
+  serviceName: product-db-svc
   replicas: 1
   selector:
     matchLabels:
-      app: product_db_svc
+      app: product-db-svc
   template:
     metadata:
       labels:
-        app: product_db_svc
+        app: product-db-svc
     spec:
       containers:
-        - name: product_db_svc
+        - name: product-db-svc
           image: ghcr.io/sony-nurdianto/product_db_svc:v0.0.1
           imagePullPolicy: IfNotPresent
           ports:

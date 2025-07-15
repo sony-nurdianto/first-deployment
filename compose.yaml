@@ -1,5 +1,5 @@
 services:
-  ecommerce_web:
+  ecommerce-web:
      build: 
       context: .
       dockerfile: scripts/dockerfile/ecommerce_web.dockerfile
@@ -15,12 +15,12 @@ services:
        retries: 5
        start_period: 5s
      depends_on:
-       product_db_svc:
+       product-db-svc:
          condition: service_healthy   
-       product_svc:
+       product-svc:
          condition: service_healthy  
 
-  product_svc:
+  product-svc:
     build: 
       context: .
       dockerfile: scripts/dockerfile/product_svc.dockerfile
@@ -39,7 +39,7 @@ services:
       product_db_svc:
         condition: service_healthy
 
-  product_db_svc:
+  product-db-svc:
     build: 
       context: .
       dockerfile: scripts/dockerfile/product_db_svc.dockerfile

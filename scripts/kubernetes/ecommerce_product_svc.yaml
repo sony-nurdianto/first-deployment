@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: product_svc
+  name: product-svc
   labels:
-    app: product_svc
+    app: product-svc
 spec:
   selector:
-    app: product_svc
+    app: product-svc
   ports:
     - name: http
       protocol: TCP
@@ -16,25 +16,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: product_svc
+  name: product-svc
   labels:
-    app: product_svc
+    app: product-svc
     version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: product_svc
+      app: product-svc
       version: v1
   template:
     metadata:
       labels:
-        app: product_svc
+        app: product-svc
         version: v1
     spec:
       containers:
-        - name: product_svc
-          image: ghcr.io/sony-nurdianto/product_svc:v0.0.1
+        - name: product-svc
+          image: ghcr.io/sony-nurdianto/product_svc:v0.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50051

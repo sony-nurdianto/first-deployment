@@ -1,0 +1,26 @@
+version: v2
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: ../ecommerce/product_svc/internal/pbgen
+    opt: 
+      - Mproduct/v1/product.proto=.;pbgen
+    include_imports: true
+    include_wkt: false
+  - remote: buf.build/grpc/go
+    out: ../ecommerce/product_svc/internal/pbgen
+    opt: 
+      - Mproduct/v1/product.proto=.;pbgen
+    include_imports: true
+    include_wkt: false
+  - remote: buf.build/protocolbuffers/go
+    out: ../ecommerce/ecommerce_web/internal/pbgen
+    opt: 
+      - Mproduct/v1/product.proto=.;pbgen
+    include_imports: true
+    include_wkt: false
+  - remote: buf.build/grpc/go
+    out: ../ecommerce/ecommerce_web/internal/pbgen
+    opt: 
+      - Mproduct/v1/product.proto=.;pbgen
+    include_imports: true
+    include_wkt: false

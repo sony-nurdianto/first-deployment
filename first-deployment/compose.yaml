@@ -1,0 +1,67 @@
+services:
+  ecommerce_web:
+     build: 
+      context: .
+      dockerfile: scripts/dockerfile/ecommerce_web.dockerfile
+     container_name: ecommerce_web
+     networks:
+       - ecommerce_network
+     ports:
+       - "8080:8080"
+     healthcheck:
+       test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/8080'"]
+       interval: 3s
+       timeout: 2s
+       retries: 5
+       start_period: 5s
+     depends_on:
+       product_db_svc:
+         condition: service_healthy   
+       product_svc:
+         condition: service_healthy  
+
+  product_svc:
+    build: 
+      context: .
+      dockerfile: scripts/dockerfile/product_svc.dockerfile
+    container_name: product_svc
+    networks:
+      - ecommerce_network
+    ports:
+      - "50051:50051"
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/50051'"]
+      interval: 3s
+      timeout: 2s
+      retries: 5
+      start_period: 5s
+    depends_on:
+      product_db_svc:
+        condition: service_healthy
+
+  product_db_svc:
+    build: 
+      context: .
+      dockerfile: scripts/dockerfile/product_db_svc.dockerfile
+    container_name: "product_database"
+    networks:
+      - ecommerce_network
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U sony -d products" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - ecommerce_network
+    ports:
+      - "8081:8080"
+
+networks:
+  ecommerce_network:
+    driver: bridge

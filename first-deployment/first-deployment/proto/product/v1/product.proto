@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package product.v1;
+
+service ProductService {
+  rpc ListProduct(ListProductRequest) returns (stream ListProductResponse);
+}
+
+message ListProductRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message ListProductResponse {
+  string name = 1;
+  float price = 2;
+}

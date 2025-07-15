@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: product_db_svc 
+spec:
+  clusterIP: None  # Ini headless service
+  selector:
+    app: product_db_svc
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: product_db_svc
+spec:
+  serviceName: product_db_svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product_db_svc
+  template:
+    metadata:
+      labels:
+        app: product_db_svc
+    spec:
+      containers:
+        - name: product_db_svc
+          image: ghcr.io/sony-nurdianto/product_db_svc:v0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: product_db_svc
+              protocol: TCP
+          env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          securityContext:
+            privileged: false
+      imagePullSecrets:
+        - name: github-secrets
+

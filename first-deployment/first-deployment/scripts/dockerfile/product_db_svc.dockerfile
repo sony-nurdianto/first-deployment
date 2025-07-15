@@ -1,0 +1,9 @@
+FROM postgres:17.4-bookworm
+
+ENV POSTGRES_USER=sony
+ENV POSTGRES_PASSWORD=secret
+ENV POSTGRES_DB=products
+
+
+EXPOSE 5432
+

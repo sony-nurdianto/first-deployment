@@ -31,7 +31,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
-              name: product_db_svc
+              name: product-db-svc
               protocol: TCP
           env:
             - name: KUBERNETES_NAMESPACE

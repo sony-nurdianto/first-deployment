@@ -8,7 +8,7 @@ spec:
   selector:
     app: product-svc
   ports:
-    - name: grpc-product-svc 
+    - name: grpc
       protocol: TCP
       port: 50051
       targetPort: 50051
